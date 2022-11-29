@@ -247,7 +247,6 @@ function Home() {
             </FieldSet>
             <StyledAnchor>
               <Button onClick={submitData} stretch>
-                {" "}
                 Submit
               </Button>
             </StyledAnchor>
@@ -261,7 +260,6 @@ function Home() {
                 populateWithSample();
               }}
             >
-              {" "}
               Sample Data
             </button>
           </Container>

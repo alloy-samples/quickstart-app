@@ -38,10 +38,6 @@ export const StateSelect = ({
   defaultValue,
   value,
 }: SelectProps) => {
-  const handleChange = onChange
-    ? (event: React.ChangeEvent<HTMLSelectElement>) =>
-        onChange(event.currentTarget.value)
-    : undefined;
 
   return (
     <Box
@@ -51,7 +47,7 @@ export const StateSelect = ({
     >
       <StyledSelect
         defaultValue={defaultValue}
-        onChange={handleChange}
+        onChange={(e) => {onChange && onChange(e.currentTarget.value)}}
         id={id}
         value={value}
       >
@@ -115,7 +111,6 @@ export const StateSelect = ({
           pointerEvents: "none !important",
         }}
       >
-        {" "}
         <CaretDownIcon />
       </Box>
     </Box>

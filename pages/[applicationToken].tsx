@@ -53,9 +53,9 @@ const DocV = () => {
       );
     }
 
-    if (data.status === "complete") {
+    if (data.status === "completed") {
       //this means the user finished the DocV Modal
-      if (data.outcome.toLowerCase() === "approved") {
+      if (data.journey_application_status.toLowerCase() === "approved") {
         recordResponse(
           {
             action: "[SDK] Completed Document Verification",
@@ -66,7 +66,7 @@ const DocV = () => {
         router.push("/approved");
       }
 
-      if (data.outcome.toLowerCase() === "denied") {
+      if (data.journey_application_status.toLowerCase() === "denied") {
         recordResponse(
           {
             action: "[SDK] Completed Document Verification SDK",

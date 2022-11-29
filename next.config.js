@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   env: {
     ALLOY_SDK: process.env.ALLOY_SDK,
+    JOURNEY_TOKEN: process.env.JOURNEY_TOKEN,
   },
 };
 
