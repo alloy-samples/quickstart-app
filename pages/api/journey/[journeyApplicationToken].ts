@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const apiBaseUrl = process.env.API_BASE_URL;
+//Do not expose these to the client-side. These tokens are sensitive; They should only exist in server-side.
 const authToken =
   process.env.WORKFLOW_TOKEN + ":" + process.env.WORKFLOW_SECRET;
 const journeyToken = process.env.JOURNEY_TOKEN!;
