@@ -82,9 +82,12 @@ function Home() {
     }
     setLoading(false);
 
-    if (jsonResponse.status.toLowerCase() === "pending_step_up") {
+    // pending_step_up is the correct status trigger the SDK
+    // some legacy implentations will contain pending documents
+    const journeyStatus = jsonResponse.status.toLowerCase();
+    if (journeyStatus === "pending_step_up" || journeyStatus === "pending_documents") {
       router.push(`/${jsonResponse.journey_application_token}`);
-    } else if (jsonResponse.status.toLowerCase() === "completed") {
+    } else if (journeyStatus === "completed") {
       //This means journey finished. People would be either approved or denied.
       if (jsonResponse.complete_outcome.toLowerCase() === "approved") {
         //This person was approved
