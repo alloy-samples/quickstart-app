@@ -14,6 +14,7 @@ API_BASE_URL=https://sandbox.alloy.co/
 
 The `WORKFLOW_TOKEN` and `WORKFLOW_SECRET` can be found in the Alloy dashboard's workflow page.
 The `JOURNEY_TOKEN` can be found in the Alloy Dashboard's Journey page.
+The 'ALLOY_SDK' parameter is the SDK key. Please contact CSM or support@alloy.com to get your key
 `API_BASE_URL` is https://sandbox.alloy.co/ for Sandbox and https://api.alloy.co/ for production. 
 
 3. run npm install
