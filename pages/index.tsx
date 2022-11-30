@@ -85,7 +85,6 @@ function Home() {
     // pending_step_up is the correct status trigger the SDK
     // some legacy implentations will contain pending documents
     const journeyStatus = jsonResponse.status.toLowerCase();
-
     if (journeyStatus === "pending_step_up" || journeyStatus === "pending_documents") {
       router.push(`/${jsonResponse.journey_application_token}`);
     } else if (journeyStatus === "completed") {
