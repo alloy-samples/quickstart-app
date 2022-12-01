@@ -1,7 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 You need to have Node 16+ and npm 8+ installed
 
-The Quick Start App allows you to demo your Journey and SDK end to end! You can use it to test out any of the supported Alloy plugins (see more details on the plugins [here](https://developer.alloy.com/public/docs/document-verification-web-sdk)) and see sample API responses for each step. See [API Docs](https://developer.alloy.com/public/docs/document-verification-web-sdk) for more details. 
+Alloy is the Identity Decisioning Platform that helps banks and fintech companies automate their decisions for onboarding, transaction monitoring and credit underwriting. Our single-API platform connects you and other clients like Gemini, Marqeta and Ally Bank to multiple data sources that result in the ability to make better fraud, risk and compliance decisions.
+
+The Quick Start App allows you to demo your Alloy Journey and SDK end to end! You can use it to test out any of the supported Alloy plugins (see more details on the plugins [here](https://developer.alloy.com/public/docs/document-verification-web-sdk)) and see sample API responses for each step. See [API Docs](https://developer.alloy.com/public/docs/document-verification-web-sdk) for more details. 
 
 Alloy Journeys are decision configurations that are designed to provide a synchronous response to allow you to provide feedback, next steps, or a final decision to your users. To learn more about Journeys, head over [here](https://developer.alloy.com/public/docs/introduction-to-journeys).
 
