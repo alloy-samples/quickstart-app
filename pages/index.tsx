@@ -41,7 +41,7 @@ function Home() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [ssn, setSSN] = useState("")
   const { ...context } = useContext(ResponseContext);
 
   const router = useRouter();
@@ -59,6 +59,7 @@ function Home() {
       address_postal_code: addressPostalCode,
       address_country_code: "US",
       income: income,
+      document_ssn: ssn,
     };
 
     setLoading(true);
@@ -245,6 +246,17 @@ function Home() {
                 value={income}
                 onChange={(e) => {
                   setIncome(e.currentTarget.value);
+                }}
+              />
+            </FieldSet>
+            <FieldSet>
+              <Label htmlFor="ssn">SSN</Label>
+              <Input
+                type={"text"}
+                id={"ssn"}
+                value={ssn}
+                onChange={(e) => {
+                  setSSN(e.currentTarget.value);
                 }}
               />
             </FieldSet>
