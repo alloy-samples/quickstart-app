@@ -5,6 +5,7 @@ import { Button, Label, Input, FieldSet, StateSelect } from "../components";
 import { recordResponse } from "../utils/useResponse";
 import { ApplicationResponse } from "../types/types";
 import { useRouter } from "next/router";
+import { mask } from "../utils/helper";
 
 const Container = styled("div", {
   display: "flex",
@@ -41,7 +42,7 @@ function Home() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [ssn, setSSN] = useState("")
+  const [ssn, setSSN] = useState("");
   const { ...context } = useContext(ResponseContext);
 
   const router = useRouter();
@@ -86,7 +87,10 @@ function Home() {
     // pending_step_up is the correct status trigger the SDK
     // some legacy implentations will contain pending documents
     const journeyStatus = jsonResponse.status.toLowerCase();
-    if (journeyStatus === "pending_step_up" || journeyStatus === "pending_documents") {
+    if (
+      journeyStatus === "pending_step_up" ||
+      journeyStatus === "pending_documents"
+    ) {
       router.push(`/${jsonResponse.journey_application_token}`);
     } else if (journeyStatus === "completed") {
       //This means journey finished. People would be either approved or denied.
@@ -254,7 +258,7 @@ function Home() {
               <Input
                 type={"text"}
                 id={"ssn"}
-                value={ssn}
+                value={mask(ssn)}
                 onChange={(e) => {
                   setSSN(e.currentTarget.value);
                 }}
