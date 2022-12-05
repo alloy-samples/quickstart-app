@@ -5,7 +5,7 @@ import { Button, Label, Input, FieldSet, StateSelect } from "../components";
 import { recordResponse } from "../utils/useResponse";
 import { ApplicationResponse } from "../types/types";
 import { useRouter } from "next/router";
-import { mask } from "../utils/helper";
+import { mask, format } from "../utils/helper";
 
 const Container = styled("div", {
   display: "flex",
@@ -258,7 +258,7 @@ function Home() {
               <Input
                 type={"text"}
                 id={"ssn"}
-                value={mask(ssn)}
+                value={mask(format(ssn))}
                 onChange={(e) => {
                   setSSN(e.currentTarget.value);
                 }}
