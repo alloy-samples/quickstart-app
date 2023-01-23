@@ -31,18 +31,18 @@ const StyledAnchor = styled("a", {
 });
 
 function Home() {
-  const [birthDate, setbirthDate] = useState("");
-  const [addressLine1, setAddressLine1] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [addressCity, setAddressCity] = useState("");
-  const [addressState, setAddressState] = useState("NY");
-  const [addressPostalCode, setAddressPostalCode] = useState("");
-  const [income, setIncome] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [ssn, setSSN] = useState("");
+  const [birthDate, setbirthDate] = useState<string>();
+  const [addressLine1, setAddressLine1] = useState<string>();
+  const [phoneNumber, setPhoneNumber] = useState<string>();
+  const [addressCity, setAddressCity] = useState<string>();
+  const [addressState, setAddressState] = useState<string>("NY");
+  const [addressPostalCode, setAddressPostalCode] = useState<string>();
+  const [income, setIncome] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [ssn, setSSN] = useState<string>();
   const { ...context } = useContext(ResponseContext);
 
   const router = useRouter();
