@@ -1,10 +1,16 @@
-export const mask = (value: string) => {
+export const mask = (value?: string) => {
+  if (!value) {
+    return value;
+  }
   const masked = value.slice(0, 7).replace(/[0-9]/g, "*");
   const final = masked + value.slice(7);
   return final;
 };
 
-export const format = (value: string) => {
+export const format = (value?: string) => {
+  if (!value) {
+    return value;
+  }
   value = value.slice(0, 11).replace(/-/g, "");
   let result = "";
   if (value.length <= 3) {
