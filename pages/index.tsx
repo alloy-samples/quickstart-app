@@ -43,6 +43,7 @@ function Home() {
   const [email, setEmail] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [ssn, setSSN] = useState<string>();
+  const [isPrefill, setIsPrefill] = useState<boolean>(false);
   const { ...context } = useContext(ResponseContext);
 
   const router = useRouter();
@@ -50,17 +51,18 @@ function Home() {
   const submitData = async () => {
     const data = {
       phone_number: phoneNumber,
-      name_first: firstName,
-      name_last: lastName,
-      email_address: email,
       birth_date: birthDate,
-      address_line_1: addressLine1,
-      address_city: addressCity,
-      address_state: addressState,
-      address_postal_code: addressPostalCode,
       address_country_code: "US",
-      income: income,
-      document_ssn: ssn,
+      ...(!isPrefill && { name_first: firstName}),
+      ...(!isPrefill && { name_last: lastName}),
+      ...(!isPrefill && { email_address: email}),
+      ...(!isPrefill && { name_first: firstName}),
+      ...(!isPrefill && { address_line_1: addressLine1}),
+      ...(!isPrefill && { address_city: addressCity}),
+      ...(!isPrefill && { address_state: addressState}),
+      ...(!isPrefill && { address_postal_code: addressPostalCode}),
+      ...(!isPrefill && {income: income}),
+      ...(!isPrefill && {document_ssn: ssn})
     };
 
     setLoading(true);
@@ -126,6 +128,7 @@ function Home() {
         <>
           <Title>Alloy Sample App</Title>
           <Container>
+          {isPrefill != true && <>
             <Box
               css={{
                 gap: "$2",
@@ -165,6 +168,7 @@ function Home() {
                 }}
               />
             </FieldSet>
+            </>}
             <Box
               css={{
                 gap: "$2",
@@ -193,6 +197,7 @@ function Home() {
                 />
               </FieldSet>
             </Box>
+            {isPrefill != true && <>
             <FieldSet>
               <Label htmlFor="address">Address</Label>
               <Input
@@ -258,29 +263,35 @@ function Home() {
               <Input
                 type={"text"}
                 id={"ssn"}
-                value={mask(format(ssn))}
+                value={ssn}
                 onChange={(e) => {
                   setSSN(e.currentTarget.value);
                 }}
               />
             </FieldSet>
+            </>}
             <StyledAnchor>
               <Button onClick={submitData} stretch>
                 Submit
               </Button>
             </StyledAnchor>
-            <button
-              style={{
+            <div style={{
                 position: "absolute",
                 bottom: 12,
                 left: 12,
-              }}
+              }}>
+            <button
+             
               onClick={() => {
                 populateWithSample();
               }}
             >
               Sample Data
             </button>
+            <button style={{
+                marginLeft: 10
+              }} onClick={()=>setIsPrefill(current => !current)}>Prove Prefill</button>
+            </div>
           </Container>
         </>
       )}
