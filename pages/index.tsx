@@ -249,7 +249,6 @@ function Home() {
                   onChange={(e) => {
                     setAddressCity(e.currentTarget.value);
                   }}
-                  maxLength={9}
                 />
               </FieldSet>
               <FieldSet>
@@ -288,7 +287,7 @@ function Home() {
             <FieldSet>
               <Label htmlFor="ssn">SSN</Label>
               <Input
-                value={ssn}
+                value={ssn || ''}
                 onChange={onInputChange}
                 onBlur={asterisk}
                 onFocus={unasterisk}
