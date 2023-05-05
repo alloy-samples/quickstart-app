@@ -5,7 +5,6 @@ import { Button, Label, Input, FieldSet, StateSelect } from "../components";
 import { recordResponse } from "../utils/useResponse";
 import { ApplicationResponse } from "../types/types";
 import { useRouter } from "next/router";
-import { mask, format } from "../utils/helper";
 
 const Container = styled("div", {
   display: "flex",
@@ -42,7 +41,9 @@ function Home() {
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [ssn, setSSN] = useState<string>();
+  const [ssn, setSsn] = useState<string>('');
+  const [ssnUndo, setSsnUndo] = useState<string>('');
+
   const { ...context } = useContext(ResponseContext);
 
   const router = useRouter();
@@ -60,7 +61,7 @@ function Home() {
       address_postal_code: addressPostalCode,
       address_country_code: "US",
       income: income,
-      document_ssn: ssn,
+      document_ssn: ssnUndo.replace(/-/g, ""),
     };
 
     setLoading(true);
@@ -116,6 +117,36 @@ function Home() {
     setFirstName("David");
     setLastName("Kim");
     setEmail("someperson@alloy.com");
+    setSsnUndo('111111111');
+    setSsn('***-**-1111');
+  };
+
+  const onInputChange = (event: any) => {
+    var value = event.target.value;
+    value = value.replace(/-/g, "");
+    var regex = /^([^\s]{3})([^\s]{2})([^\s]{4})$/g;
+    var match = regex.exec(value);
+    if (match) {
+      match.shift();
+      value = match.join("-");
+    }
+    setSsn(value);
+    setSsnUndo(value);
+  };
+
+  const asterisk = (event: any) => {
+    const r = new RegExp("(?:d{3})-(?:d{2})-(d{4})");
+    const str = ssn;
+    const result = str.replace(r, "###-##-");
+    let uo = result.replace(/\d(?=\d{4})/, "*");
+    const reg = /.{1,6}/;
+    const string = result;
+    uo = string.replace(reg, (m) => "*".repeat(m.length));
+    setSsn(uo);
+  };
+
+  const unasterisk = () => {
+    setSsn(ssnUndo);
   };
 
   return (
@@ -256,12 +287,10 @@ function Home() {
             <FieldSet>
               <Label htmlFor="ssn">SSN</Label>
               <Input
-                type={"text"}
-                id={"ssn"}
-                value={mask(format(ssn))}
-                onChange={(e) => {
-                  setSSN(e.currentTarget.value);
-                }}
+                value={ssn}
+                onChange={onInputChange}
+                onBlur={asterisk}
+                onFocus={unasterisk}
               />
             </FieldSet>
             <StyledAnchor>

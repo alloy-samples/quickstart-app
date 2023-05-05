@@ -36,7 +36,6 @@ export function closeAlloy() {
 }
 
 export function openAlloy(cb: any, anchorElementId?: string) {
-  console.log("HERE");
   alloy.open(cb, anchorElementId);
 }
 
