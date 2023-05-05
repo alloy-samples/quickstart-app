@@ -249,6 +249,7 @@ function Home() {
                   onChange={(e) => {
                     setAddressCity(e.currentTarget.value);
                   }}
+                  maxLength={9}
                 />
               </FieldSet>
               <FieldSet>
