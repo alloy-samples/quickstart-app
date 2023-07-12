@@ -1,11 +1,11 @@
-import { ReactElement, useContext, useState } from "react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import Layout, { ResponseContext } from "../components/layouts/layout";
 import { styled } from "../stitches.config";
 import { Button, Label, Input, FieldSet, StateSelect } from "../components";
 import { recordResponse } from "../utils/useResponse";
 import { ApplicationResponse } from "../types/types";
 import { useRouter } from "next/router";
-import { mask, format } from "../utils/helper";
+import { initAlloy } from "../utils/alloy";
 
 const Container = styled("div", {
   display: "flex",
@@ -42,7 +42,12 @@ function Home() {
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [ssn, setSSN] = useState<string>();
+  const [ssn, setSsn] = useState<string>("");
+  const [ssnUndo, setSsnUndo] = useState<string>("");
+  const [iovationBlackboxId, setIovationBlackboxId] = useState<string>("");
+  const [neuroIdSiteId, setNeuroIdSiteId] = useState<string>("");
+  const [neuroUserId, setNeuroUserId] = useState<string>("");
+
   const { ...context } = useContext(ResponseContext);
 
   const router = useRouter();
@@ -54,13 +59,21 @@ function Home() {
       name_last: lastName,
       email_address: email,
       birth_date: birthDate,
-      address_line_1: addressLine1,
-      address_city: addressCity,
-      address_state: addressState,
-      address_postal_code: addressPostalCode,
-      address_country_code: "US",
+      addresses: [
+        {
+          line_1: addressLine1,
+          city: addressCity,
+          state: addressState,
+          postal_code: addressPostalCode,
+          country_code: "US",
+          type: "primary",
+        },
+      ],
       income: income,
-      document_ssn: ssn,
+      document_ssn: ssnUndo.replace(/-/g, ""),
+      iovation_blackbox_id: iovationBlackboxId,
+      site_id: neuroIdSiteId,
+      neuro_user_id: neuroUserId,
     };
 
     setLoading(true);
@@ -113,10 +126,52 @@ function Home() {
     setAddressState("NY");
     setAddressPostalCode("11111");
     setIncome("72000");
-    setFirstName("David");
-    setLastName("Kim");
+    setFirstName("John");
+    setLastName("Doe");
     setEmail("someperson@alloy.com");
+    setSsnUndo("111111111");
+    setSsn("***-**-1111");
   };
+
+  const onInputChange = (event: any) => {
+    var value = event.target.value;
+    value = value.replace(/-/g, "");
+    var regex = /^([^\s]{3})([^\s]{2})([^\s]{4})$/g;
+    var match = regex.exec(value);
+    if (match) {
+      match.shift();
+      value = match.join("-");
+    }
+    setSsn(value);
+    setSsnUndo(value);
+  };
+
+  const asterisk = (event: any) => {
+    const r = new RegExp("(?:d{3})-(?:d{2})-(d{4})");
+    const str = ssn;
+    const result = str.replace(r, "###-##-");
+    let uo = result.replace(/\d(?=\d{4})/, "*");
+    const reg = /.{1,6}/;
+    const string = result;
+    uo = string.replace(reg, (m) => "*".repeat(m.length));
+    setSsn(uo);
+  };
+
+  const unasterisk = () => {
+    setSsn(ssnUndo);
+  };
+
+  useEffect(() => {
+    const startSDK = async () => {
+      const initResponse = await initAlloy();
+      console.log(initResponse);
+      const { iovationBlackboxId, neuroIdSiteId, neuroUserId } = initResponse;
+      setIovationBlackboxId(iovationBlackboxId);
+      setNeuroIdSiteId(neuroIdSiteId);
+      setNeuroUserId(neuroUserId);
+    };
+    startSDK().catch(console.error);
+  }, []);
 
   return (
     <div>
@@ -256,12 +311,10 @@ function Home() {
             <FieldSet>
               <Label htmlFor="ssn">SSN</Label>
               <Input
-                type={"text"}
-                id={"ssn"}
-                value={mask(format(ssn))}
-                onChange={(e) => {
-                  setSSN(e.currentTarget.value);
-                }}
+                value={ssn || ""}
+                onChange={onInputChange}
+                onBlur={asterisk}
+                onFocus={unasterisk}
               />
             </FieldSet>
             <StyledAnchor>
