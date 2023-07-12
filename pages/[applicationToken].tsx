@@ -1,6 +1,6 @@
 import { styled } from "../stitches.config";
 import { openAlloy, initAlloy } from "../utils/alloy";
-import { ReactElement, useContext, useEffect, useRef, useState } from "react";
+import { ReactElement, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout, { ResponseContext } from "../components/layouts/layout";
 import { Button } from "../components";

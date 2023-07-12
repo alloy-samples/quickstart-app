@@ -1,10 +1,11 @@
-import { ReactElement, useContext, useState } from "react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import Layout, { ResponseContext } from "../components/layouts/layout";
 import { styled } from "../stitches.config";
 import { Button, Label, Input, FieldSet, StateSelect } from "../components";
 import { recordResponse } from "../utils/useResponse";
 import { ApplicationResponse } from "../types/types";
 import { useRouter } from "next/router";
+import { initAlloy } from "../utils/alloy";
 
 const Container = styled("div", {
   display: "flex",
@@ -41,8 +42,10 @@ function Home() {
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [ssn, setSsn] = useState<string>('');
-  const [ssnUndo, setSsnUndo] = useState<string>('');
+  const [ssn, setSsn] = useState<string>("");
+  const [ssnUndo, setSsnUndo] = useState<string>("");
+  const [iovationBlackboxId, setIovationBlackboxId] = useState<string>("");
+  const [neuroIdSiteId, setNeuroIdSiteId] = useState<string>("");
 
   const { ...context } = useContext(ResponseContext);
 
@@ -55,13 +58,20 @@ function Home() {
       name_last: lastName,
       email_address: email,
       birth_date: birthDate,
-      address_line_1: addressLine1,
-      address_city: addressCity,
-      address_state: addressState,
-      address_postal_code: addressPostalCode,
-      address_country_code: "US",
+      addresses: [
+        {
+          line_1: addressLine1,
+          city: addressCity,
+          state: addressState,
+          postal_code: addressPostalCode,
+          country_code: "US",
+          type: "primary",
+        },
+      ],
       income: income,
       document_ssn: ssnUndo.replace(/-/g, ""),
+      iovation_blackbox_id: iovationBlackboxId,
+      site_id: siteId
     };
 
     setLoading(true);
@@ -114,11 +124,11 @@ function Home() {
     setAddressState("NY");
     setAddressPostalCode("11111");
     setIncome("72000");
-    setFirstName("David");
-    setLastName("Kim");
+    setFirstName("John");
+    setLastName("Doe");
     setEmail("someperson@alloy.com");
-    setSsnUndo('111111111');
-    setSsn('***-**-1111');
+    setSsnUndo("111111111");
+    setSsn("***-**-1111");
   };
 
   const onInputChange = (event: any) => {
@@ -148,6 +158,18 @@ function Home() {
   const unasterisk = () => {
     setSsn(ssnUndo);
   };
+
+  useEffect(() => {
+    const startSDK = async () => {
+      const initResponse = await initAlloy();
+      console.log(initResponse);
+      const { iovationBlackboxId, neuroIdSiteId } = initResponse;
+      // Inject manually the values in this example
+      // without using the createJourneyMethod
+      setIovationBlackboxId(iovationBlackboxId);
+      setNeuroIdSiteId(neuroIdSiteId);
+    startSDK().catch(console.error);
+  }, []);
 
   return (
     <div>
@@ -287,7 +309,7 @@ function Home() {
             <FieldSet>
               <Label htmlFor="ssn">SSN</Label>
               <Input
-                value={ssn || ''}
+                value={ssn || ""}
                 onChange={onInputChange}
                 onBlur={asterisk}
                 onFocus={unasterisk}

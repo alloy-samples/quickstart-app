@@ -4,12 +4,16 @@ export interface EvaluationData {
   name_last: string;
   email_address: string;
   birth_date: string;
-  address_line_1: string;
-  address_city: string;
-  address_state: string;
-  address_postal_code: string;
-  address_country_code: string;
+  addresses: Address[];
   income: string;
+}
+
+export type Address = {
+  line_1: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  country_code: string;
 }
 
 export interface DocVResponse {
