@@ -46,6 +46,7 @@ function Home() {
   const [ssnUndo, setSsnUndo] = useState<string>("");
   const [iovationBlackboxId, setIovationBlackboxId] = useState<string>("");
   const [neuroIdSiteId, setNeuroIdSiteId] = useState<string>("");
+  const [neuroUserId, setNeuroUserId] = useState<string>("");
 
   const { ...context } = useContext(ResponseContext);
 
@@ -71,7 +72,8 @@ function Home() {
       income: income,
       document_ssn: ssnUndo.replace(/-/g, ""),
       iovation_blackbox_id: iovationBlackboxId,
-      site_id: siteId
+      site_id: neuroIdSiteId,
+      neuro_user_id: neuroUserId,
     };
 
     setLoading(true);
@@ -163,11 +165,11 @@ function Home() {
     const startSDK = async () => {
       const initResponse = await initAlloy();
       console.log(initResponse);
-      const { iovationBlackboxId, neuroIdSiteId } = initResponse;
-      // Inject manually the values in this example
-      // without using the createJourneyMethod
+      const { iovationBlackboxId, neuroIdSiteId, neuroUserId } = initResponse;
       setIovationBlackboxId(iovationBlackboxId);
       setNeuroIdSiteId(neuroIdSiteId);
+      setNeuroUserId(neuroUserId);
+    };
     startSDK().catch(console.error);
   }, []);
 
