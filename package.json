@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@alloyidentity/web-sdk": "^1.0.0",
+    "@alloyidentity/web-sdk": "^1.0.2",
     "@radix-ui/colors": "0.1.8",
     "@radix-ui/react-accordion": "1.0.1",
     "@radix-ui/react-icons": "1.1.1",
