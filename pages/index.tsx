@@ -77,6 +77,8 @@ function Home() {
     };
 
     setLoading(true);
+    console.log('sending the following data to the api/journey endpoint: ', data);
+    
     const response = await fetch("/api/journey", {
       method: "POST",
       headers: {
@@ -311,6 +313,8 @@ function Home() {
             <FieldSet>
               <Label htmlFor="ssn">SSN</Label>
               <Input
+                type={"text"}
+                id={"ssn"}
                 value={ssn || ""}
                 onChange={onInputChange}
                 onBlur={asterisk}
