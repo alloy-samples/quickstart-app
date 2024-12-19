@@ -122,7 +122,7 @@ function Home() {
 
   const populateWithSample = () => {
     setbirthDate("1987-06-05");
-    setPhoneNumber("16087703190");
+    setPhoneNumber("15555555555");
     setAddressLine1("41 E 11th St");
     setAddressCity("New York");
     setAddressState("NY");
